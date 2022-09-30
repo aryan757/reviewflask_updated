@@ -19,9 +19,9 @@ def index():
             searchString = request.form['content'].replace(" ","")
             flipkart_url = "https://www.flipkart.com/search?q=" + searchString
             uClient = uReq(flipkart_url)
-            flipkartPage = uClient.read()
+            flipkartPage = uClient.read() ## it will able to acess all the information w.r.t url
             uClient.close()
-            flipkart_html = bs(flipkartPage, "html.parser")
+            flipkart_html = bs(flipkartPage , "html.parser") ## it will try to create in some structed format , not very structed format!
             bigboxes = flipkart_html.findAll("div", {"class": "_1AtVbE col-12-12"})
             del bigboxes[0:3]
             box = bigboxes[0]
@@ -69,7 +69,8 @@ def index():
                 mydict = {"Product": searchString, "Name": name, "Rating": rating, "CommentHead": commentHead,
                           "Comment": custComment}
                 reviews.append(mydict)
-            return render_template('results.html', reviews=reviews[0:(len(reviews)-1)])
+            return render_template('results.html', reviews=reviews[0:(len(reviews)-1)])  ##now our requirmnet is to showcase all
+        ##the data again in some other html page !!
         except Exception as e:
             print('The Exception message is: ',e)
             return 'something is wrong'
